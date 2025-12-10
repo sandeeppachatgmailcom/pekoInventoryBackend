@@ -5,10 +5,10 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser")
 const errorHandler = require('./src/errorHandler/globalErrorHandler.js');
 const mainRouter = require('./src/routes/main.routes.js');
- 
+
 dotenv.config();
 
-const app = express(); 
+const app = express();
 const port = 8092;
 const DATABASE_URL = process.env.DATABASE_URL;
 
@@ -17,7 +17,7 @@ const allowedOrigins = [
     "http://localhost:5173",  // ✅ Local Development
     "http://localhost:5174",  // ✅ Local Development
     "http://localhost:8092", // ✅ local development
- 
+
 ];
 
 
@@ -41,7 +41,7 @@ app.use(cors(corsOptions));
 app.use(express.json({ limit: '50mb' }));
 app.use(cookieParser())
 
-app.use((req,res,next)=>{
+app.use((req, res, next) => {
     console.log(req.path)
     next()
 })
@@ -54,14 +54,14 @@ app.use((req, res, next) => {
 
 app.use('/', mainRouter);
 
-app.get("/test", (req, res)=>{
-    res.json({ success: true, message: "checking wheather branching is working or not"})
+app.get("/test", (req, res) => {
+    res.json({ success: true, message: "checking wheather branching is working or not" })
 })
 
 app.use(errorHandler);
 
 app.listen(port, () => {
-    
+
 
     console.log(`Server listening on port ${port}`);
 });
