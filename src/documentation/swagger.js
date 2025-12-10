@@ -10,12 +10,12 @@ const swaggerOptions = {
       },
       servers: [
          {
-          url: 'http://localhost:8089',
-          description: 'localhost sever for backend developers',
+          url: 'https://pekoinventorybackend.onrender.com/',
+          description: 'online  sever for frontend developers',
         },
         {
           url: 'http://localhost:8092',
-          description: 'subscription server',
+          description: 'local  sever for backend developers',
         },
         
          
