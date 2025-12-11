@@ -1,6 +1,6 @@
 /**
  * @swagger
- * /category/{id}:
+ * /category/readById/{id}:
  *   get:
  *     summary: Get category by ID
  *     description: >
