@@ -4,9 +4,9 @@
  *   post:
  *     summary: Create a new product/item
  *     description: >
- *       Adds a new product to inventory with category mapping.  
- *       Product can belong to multiple categories (handled through ProductCategory table).  
- *       Only Admin/Manager role allowed to create products — verified via JWT token.
+ *       Adds a new product to the inventory with category mapping.  
+ *       A product may belong to multiple categories (stored in product_categories table).  
+ *       Only Admin/Manager roles can create products — validated via JWT token.
  *     tags:
  *       - Product
  *     security:
@@ -20,7 +20,7 @@
  *             required:
  *               - productName
  *               - sku
- *               - unitPrice
+ *               - uom
  *               - categoryIds
  *             properties:
  *               productName:
@@ -29,20 +29,17 @@
  *               sku:
  *                 type: string
  *                 example: "SKU-10234"
- *               unitPrice:
- *                 type: number
- *                 example: 45.50
+ *               uom:
+ *                 type: string
+ *                 example: "PCS"
  *               description:
  *                 type: string
  *                 example: "Bathing soap with lemon fragrance"
- *               supplierId:
- *                 type: string
- *                 example: "5"
  *               categoryIds:
  *                 type: array
  *                 items:
  *                   type: string
- *                 example: ["2","4"]
+ *                 example: ["2", "4"]
  *               image:
  *                 type: string
  *                 example: "https://example.com/img/soap.png"
@@ -55,21 +52,20 @@
  *               status: true
  *               message: "Product created successfully"
  *               data:
- *                 id: "10"
+ *                 productId: "10"
  *                 productName: "Nirma Soap 125g"
  *                 sku: "SKU-10234"
- *                 unitPrice: 45.5
- *                 supplierId: "5"
- *                 categoryIds: ["2","4"]
+ *                 uom: "PCS"
+ *                 categoryIds: ["2", "4"]
  *       400:
- *         description: Validation error / Missing fields
+ *         description: Validation error or missing fields
  *         content:
  *           application/json:
  *             example:
  *               status: false
  *               message: "Required fields missing"
  *       500:
- *         description: Server error
+ *         description: Internal server error
  *         content:
  *           application/json:
  *             example:

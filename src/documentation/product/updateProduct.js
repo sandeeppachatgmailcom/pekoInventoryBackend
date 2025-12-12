@@ -1,23 +1,17 @@
 /**
  * @swagger
- * /product/update/{id}:
+ * /product/update:
  *   put:
  *     summary: Update product details
  *     description: >
- *       Updates product information including name, price, supplier, category mapping, stock or other editable fields.
- *       Only authorized users with edit access can update.
+ *       Updates product information including name, SKU, UOM, description,
+ *       image, and category mapping.  
+ *       Existing category mappings will be removed and replaced with the new list.  
+ *       Only authorized users (Admin/Manager) can update products.
  *     tags:
  *       - Product
  *     security:
  *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         description: Product ID to update
- *         schema:
- *           type: string
- *           example: "10"
  *     requestBody:
  *       required: true
  *       content:
@@ -25,29 +19,30 @@
  *           schema:
  *             type: object
  *             properties:
+ *               id:
+ *                 type: string
+ *                 required: true
+ *                 example: "10"
  *               productName:
  *                 type: string
  *                 example: "Nirma Soap 200g"
  *               sku:
  *                 type: string
  *                 example: "SKU-10234-NEW"
- *               unitPrice:
- *                 type: number
- *                 example: 55.00
- *               supplierId:
+ *               uom:
  *                 type: string
- *                 example: "5"
+ *                 example: "PCS"
+ *               description:
+ *                 type: string
+ *                 example: "Updated product description"
+ *               image:
+ *                 type: string
+ *                 example: "https://example.com/new-image.png"
  *               categoryIds:
  *                 type: array
  *                 items:
  *                   type: string
  *                 example: ["2", "4"]
- *               description:
- *                 type: string
- *                 example: "Updated product description"
- *               stock:
- *                 type: number
- *                 example: 150
  *     responses:
  *       200:
  *         description: Product updated successfully
@@ -57,13 +52,13 @@
  *               status: true
  *               message: "Product updated successfully"
  *               data:
- *                 id: "10"
+ *                 productId: "10"
  *                 productName: "Nirma Soap 200g"
  *                 sku: "SKU-10234-NEW"
- *                 unitPrice: 55.00
- *                 supplierId: "5"
- *                 categoryIds: ["2","4"]
- *                 stock: 150
+ *                 uom: "PCS"
+ *                 description: "Updated product description"
+ *                 image: "https://example.com/new-image.png"
+ *                 categoryIds: ["2", "4"]
  *       404:
  *         description: Product not found
  *         content:

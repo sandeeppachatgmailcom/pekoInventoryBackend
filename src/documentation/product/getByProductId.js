@@ -1,6 +1,6 @@
 /**
  * @swagger
- * /product/{id}:
+ * /product/byId/{id}:
  *   get:
  *     summary: Get product details by ID
  *     description: >
