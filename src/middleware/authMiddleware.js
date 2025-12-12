@@ -26,7 +26,7 @@ const authMiddleware = (req, res, next) => {
             email: decoded.email,
             isAdmin: decoded.isAdmin
         };
-
+        console.log(req.user,'current user')
         next();  
 
     } catch (error) {

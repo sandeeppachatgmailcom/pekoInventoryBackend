@@ -5,12 +5,13 @@ const deleteProductCtrl = require('../controller/product/deleteProductCtrl')
 const getProductsByIdCtrl = require('../controller/product/getProductsByIdCtrl')
 const getProductListCtrl = require('../controller/product/getProductListCtrl')
 const updateProductCtrl = require('../controller/product/updateProductCtrl')
+const adminMiddleware = require('../middleware/adminMIddleWare')
 const productRouter = express.Router()
 
 productRouter
-    .post('/create', createProductCtrl)
-    .delete('/delete/:productId', deleteProductCtrl)
+    .post('/create',adminMiddleware, createProductCtrl)
+    .delete('/delete/:productId',adminMiddleware, deleteProductCtrl)
     .get('/byId/:productId', getProductsByIdCtrl)
     .get('/list', getProductListCtrl)
-    .put('/update',(req,res,next)=>{console.log('object');next()} ,updateProductCtrl )
+    .put('/update',adminMiddleware,updateProductCtrl )
 module.exports = productRouter
