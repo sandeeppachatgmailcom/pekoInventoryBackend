@@ -2,6 +2,13 @@ const jwt = require("jsonwebtoken");
 
 const authMiddleware = (req, res, next) => {
     try {
+        const publicRoutes = ["/users/login"];
+
+        
+        if (publicRoutes.includes(req.path)) {
+            return next();
+        }
+
          
         const token =
             req.cookies?.auth_token ||
@@ -14,23 +21,24 @@ const authMiddleware = (req, res, next) => {
             });
         }
 
-       
+         
         const decoded = jwt.verify(
             token,
             process.env.JWT_SECRET || "secret123"
         );
 
-        const module = req.path?.split('/') 
+        
+        const parts = req.path.split("/").filter(Boolean); // removes empty values
+
         req.user = {
             id: decoded.id,
             email: decoded.email,
             isAdmin: decoded.isAdmin,
-            module:module[1],
-            action:module[2] 
+            module: parts[0] || null,
+            action: parts[1] || null
         };
- 
-        console.log( req.user,'current user')
-        next();  
+
+        next();
 
     } catch (error) {
         return res.status(401).json({

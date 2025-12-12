@@ -7,7 +7,6 @@ const updateProductCtrl = async (req,res,next)=>{
         const { productName , sku  , uom  ,id, description , categoryIds , image  } = req.body
         const {productId } = req.query
         const user = req.user?.id
-        
         const result =  await updateProductFn({productName ,productId:id, sku  , uom  , description , categoryIds , image,user})
         await addToauditLog({ req, result, notes: '' })
         res.json(result)
