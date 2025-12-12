@@ -29,10 +29,10 @@
  *               password:
  *                 type: string
  *                 example: "P@ssword123"
- *               role:
- *                 type: string
- *                 enum: [Admin, Manager, Clerk]
- *                 example: "Manager"
+ *               isAdmin:
+ *                 type: Boolean
+ *                  
+ *                 example: true
  *     responses:
  *       201:
  *         description: User created successfully.

@@ -5,6 +5,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser")
 const errorHandler = require('./src/errorHandler/globalErrorHandler.js');
 const mainRouter = require('./src/routes/main.routes.js');
+const authMiddleware = require('./src/middleware/authMiddleware.js');
 
 dotenv.config();
 
@@ -52,7 +53,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/', mainRouter);
+app.use('/',authMiddleware,mainRouter);
 
 app.get("/test", (req, res) => {
     res.json({ success: true, message: "checking wheather branching is working or not" })
