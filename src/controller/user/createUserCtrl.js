@@ -12,11 +12,11 @@ const createUserCtrl = async (req, res, next) => {
         }
  
         await auditLogFn({
-            userId: req.user.id,
+            userId: req.user?.id,
             username: req.user.email,         // or req.user.name if available
             role: req.user.isAdmin ? "Admin" : "User",
-            module: "User",
-            action: "Create",
+            module: req.user?.module,
+            action: req.user?.action,
             recordId: result.data.id,
             recordType: "users",
             beforeData: null,

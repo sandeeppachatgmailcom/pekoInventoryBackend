@@ -25,7 +25,7 @@ const deleteCategoryFn = async ({ categoryId, userId }) => {
 
   } catch (error) {
     console.error(error);
-    return { status: false, message: error.message };
+    return { status: false, message: error.message +'s' };
   }
 };
 

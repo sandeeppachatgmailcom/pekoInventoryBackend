@@ -20,13 +20,16 @@ const authMiddleware = (req, res, next) => {
             process.env.JWT_SECRET || "secret123"
         );
 
-     
+        const module = req.path?.split('/') 
         req.user = {
             id: decoded.id,
             email: decoded.email,
-            isAdmin: decoded.isAdmin
+            isAdmin: decoded.isAdmin,
+            module:module[1],
+            action:module[2] 
         };
-        console.log(req.user,'current user')
+ 
+        console.log( req.user,'current user')
         next();  
 
     } catch (error) {

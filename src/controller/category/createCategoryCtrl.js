@@ -14,20 +14,21 @@ const createCategoryCtrl = async (req, res) => {
             });
         }
         const result = await createCategory({ description, name:categoryName ,userId})
+        //add transaction to audit log 
         await auditLogFn({
-            userId: req.user.id,
+            userId: req.user?.id,
             username: req.user.email,          
             role: req.user.isAdmin ? "Admin" : "User",
-            module: "Category",
-            action: "Create",
-            recordId: result.data.id,
-            recordType: "users",
+            module: req.user.module,
+            action: req.user.action,
+            recordId: result.data?.id,
             beforeData: null,
             afterData: result.data,
             ipAddress: req.ip,
             userAgent: req.headers["user-agent"],
-            notes: "New product category created"
+            notes: " product category created "
         });
+
 
         return res.status(201).json(result);
 
