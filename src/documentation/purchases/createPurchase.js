@@ -24,7 +24,7 @@
  *             properties:
  *               supplierId:
  *                 type: string
- *                 example: "64f29a1223ab8a9cd013d5e7"
+ *                 example: "1"
  *               purchaseDate:
  *                 type: string
  *                 example: "2025-02-10"

@@ -9,4 +9,5 @@ userRouter
     .post('/register',adminMiddleware,createUserCtrl)
     .post('/login',loginUserCtrl)
     .post('/logout',logOutUserCtrl)
+    
 module.exports = userRouter 

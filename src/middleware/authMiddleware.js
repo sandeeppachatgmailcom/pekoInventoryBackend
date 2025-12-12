@@ -2,14 +2,15 @@ const jwt = require("jsonwebtoken");
 
 const authMiddleware = (req, res, next) => {
     try {
-        const publicRoutes = ["/users/login"];
+        const publicRoutes = ["/users/login",   ];
+        console.log(publicRoutes.includes(req.path))
 
-        
-        if (publicRoutes.includes(req.path)) {
+        if (publicRoutes.includes(req.path) ) 
+            {
             return next();
         }
 
-         
+
         const token =
             req.cookies?.auth_token ||
             req.headers["authorization"]?.replace("Bearer ", "");
@@ -21,13 +22,13 @@ const authMiddleware = (req, res, next) => {
             });
         }
 
-         
+
         const decoded = jwt.verify(
             token,
             process.env.JWT_SECRET || "secret123"
         );
 
-        
+
         const parts = req.path.split("/").filter(Boolean); // removes empty values
 
         req.user = {

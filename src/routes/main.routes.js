@@ -5,6 +5,7 @@ const categoryRouter = require('./category.routes')
 const productRouter = require('./product.routes')
 const partyRoutes = require('./party.routes')
 const userRouter = require('./user.routes')
+const purchaseRouter = require('./purchase.routes')
 const mainRouter = express.Router()
 
 mainRouter
@@ -13,4 +14,5 @@ mainRouter
     .use('/product',productRouter)
     .use('/supplier',partyRoutes)
     .use('/users',userRouter)
+    .use('/purchase',purchaseRouter)
 module.exports = mainRouter

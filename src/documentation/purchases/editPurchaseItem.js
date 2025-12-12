@@ -4,10 +4,10 @@
  *   put:
  *     summary: Edit an item in a purchase bill
  *     description: >
- *       Updates quantity, rate, or batch of a purchase item.  
- *       Optionally, you can associate the item with an existing purchase order using purchaseOrderId,  
- *       in which case price details will be fetched from the selected order.  
- *       PurchaseSummary total and tax fields auto-update accordingly.
+ *       Updates quantity, rate, taxes, UOM, or batch information for an item in a purchase bill.  
+ *       If batchNumber is changed, a new batch will be created.  
+ *       If purchaseDetailId is provided, that specific row will be updated.  
+ *       Purchase summary totals are automatically recalculated based on all items.
  *     tags:
  *       - Purchase
  *     security:
@@ -20,51 +20,68 @@
  *             type: object
  *             required:
  *               - purchaseId
- *               - itemId
+ *               - productId
+ *               - quantity
+ *               - rate
  *             properties:
  *               purchaseId:
- *                 type: string
- *                 example: "67c2ef21b97e84d55c672002"
- *               itemId:
- *                 type: string
- *                 example: "677c21b97e8asd55c672002"
- *               purchaseOrderId:
- *                 type: string
+ *                 type: number
+ *                 example: 1
+ *
+ *               purchaseDetailId:
+ *                 type: number
  *                 nullable: true
- *                 description: "Optional: ID of the purchase order to fetch price details"
- *                 example: "67c2ef21b97e84d55c672010"
+ *                 description: "Optional: If present, update this purchase item instead of using itemId"
+ *                 example: 15
+ *
+ *               itemId:
+ *                 type: number
+ *                 nullable: true
+ *                 description: "Original item ID. Used only if purchaseDetailId is not provided."
+ *                 example: 10
+ *
+ *               productId:
+ *                 type: number
+ *                 example: 1
+ *
  *               quantity:
  *                 type: number
- *                 example: 10
+ *                 example: 20
+ *
+ *               UOM:
+ *                 type: string
+ *                 example: "pcs"
+ *
  *               rate:
  *                 type: number
- *                 example: 150.50
- *               cgst:
+ *                 example: 150.5
+ *
+ *               purchaseGst:
  *                 type: number
- *                 example: 7.5
- *               sgst:
+ *                 example: 12
+ *
+ *               salesGst:
  *                 type: number
- *                 example: 7.5
- *               igst:
- *                 type: number
- *                 example: 0
- *               batchId:
+ *                 example: 18
+ *
+ *               hsn_sac:
  *                 type: string
- *                 nullable: true
- *                 example: null
- *               batchDetails:
- *                 type: object
- *                 nullable: true
- *                 properties:
- *                   batchNumber:
- *                     type: string
- *                     example: "BN-2025-A"
- *                   manufacturingDate:
- *                     type: string
- *                     example: "2025-01-10"
- *                   expiryDate:
- *                     type: string
- *                     example: "2026-01-10"
+ *                 example: "3004"
+ *
+ *               batchNumber:
+ *                 type: string
+ *                 example: "BN-2025-A"
+ *
+ *               manufacturingDate:
+ *                 type: string
+ *                 format: date
+ *                 example: "2025-01-10"
+ *
+ *               expiryDate:
+ *                 type: string
+ *                 format: date
+ *                 example: "2026-01-10"
+ *
  *     responses:
  *       200:
  *         description: Item updated and summary recalculated
@@ -73,8 +90,10 @@
  *             example:
  *               status: true
  *               message: "Item updated successfully"
+ *
  *       404:
- *         description: Item, purchase, or purchase order not found
+ *         description: Item or purchase not found
+ *
  *       500:
  *         description: Internal server error
  */
