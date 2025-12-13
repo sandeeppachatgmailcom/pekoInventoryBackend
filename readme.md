@@ -233,3 +233,4 @@ Swagger does not have a UI logout, but you can:
 Click Authorize → Logout : Clear token manually and click Authorize again
 Cloud deployment ​ ​ (initial load will delay upto 1 minute)
 live link : https://pekoinventorybackend.onrender.com
+live documentation link : https://pekoinventorybackend.onrender.com/api-docs

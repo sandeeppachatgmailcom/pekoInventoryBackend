@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 
 const authMiddleware = (req, res, next) => {
     try {
-        const publicRoutes = ["/users/login",   ];
+        const publicRoutes = ["/users/login","/api-docs"   ];
         console.log(publicRoutes.includes(req.path))
 
         if (publicRoutes.includes(req.path) ) 
