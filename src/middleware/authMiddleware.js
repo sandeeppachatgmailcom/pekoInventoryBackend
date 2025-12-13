@@ -4,7 +4,7 @@ const authMiddleware = (req, res, next) => {
     try {
         const publicRoutes = ["/users/login", "/api-docs"];
 
-        // Allow all swagger files & login
+        
         if (publicRoutes.some(route => req.path.startsWith(route))) {
             return next();
         }
