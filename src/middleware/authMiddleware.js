@@ -2,14 +2,12 @@ const jwt = require("jsonwebtoken");
 
 const authMiddleware = (req, res, next) => {
     try {
-        const publicRoutes = ["/users/login","/api-docs" ,'/'  ];
-        console.log(publicRoutes.includes(req.path))
+        const publicRoutes = ["/users/login", "/api-docs"];
 
-        if (publicRoutes.includes(req.path) ) 
-            {
+        // Allow all swagger files & login
+        if (publicRoutes.some(route => req.path.startsWith(route))) {
             return next();
         }
-
 
         const token =
             req.cookies?.auth_token ||
@@ -22,14 +20,12 @@ const authMiddleware = (req, res, next) => {
             });
         }
 
-
         const decoded = jwt.verify(
             token,
             process.env.JWT_SECRET || "secret123"
         );
 
-
-        const parts = req.path.split("/").filter(Boolean); // removes empty values
+        const parts = req.path.split("/").filter(Boolean);
 
         req.user = {
             id: decoded.id,
