@@ -2,12 +2,12 @@
  * @swagger
  * /sales/create-bill:
  *   post:
- *     summary: Create a Sales Bill
+ *     summary: Create a new sales bill with auto-generated invoice number
  *     description: >
- *       Creates a sales bill (invoice) with customer details and final billing values.  
- *       No item details included here — this API only stores the bill summary.  
- *       Serial number/invoice number logic will depend on invoiceType.  
- *       Payment is tracked separately.
+ *       Creates a new sales bill.  
+ *       Invoice number is auto-generated based on the invoiceType series  
+ *       (Example: CASH → C-000001, CREDIT → CR-000001).  
+ *       Bill totals and GST values must be provided by the frontend calculation.
  *     tags:
  *       - Sales
  *     security:
@@ -21,67 +21,60 @@
  *             required:
  *               - customerId
  *               - customerName
- *               - invoiceNumber
- *               - invoiceDate
  *               - invoiceType
- *               - totalAmount
- *               - taxAmount
+ *               - invoiceDate
  *             properties:
  *               customerId:
- *                 type: string
- *                 example: "64f29a1223ab8a9cd013d5e7"
+ *                 type: number
+ *                 example: 5
  *               customerName:
  *                 type: string
- *                 example: "John Traders"
+ *                 example: "Sandeep Kumar"
  *               invoiceType:
  *                 type: string
- *                 description: Invoice classification for serial number generation
- *                 example: "B2B"
- *               invoiceNumber:
- *                 type: string
- *                 example: "INV-1001"
+ *                 example: "CASH"
+ *                 description: Can be CASH, CREDIT, ESTIMATE, etc.
  *               invoiceDate:
  *                 type: string
- *                 example: "2025-02-10"
+ *                 format: date
+ *                 example: "2025-02-14"
  *               GSTIN:
  *                 type: string
- *                 example: "32ABCDE1234F1Z5"
+ *                 example: "29ABCDE1234F1Z5"
  *               placeOfSupply:
  *                 type: string
- *                 example: "Kerala"
+ *                 example: "Karnataka"
  *               discount:
  *                 type: number
- *                 example: 0
- *               notes:
- *                 type: string
- *                 example: "First sales bill"
+ *                 example: 50
  *               totalAmount:
  *                 type: number
- *                 example: 5000
+ *                 example: 1500
  *               taxAmount:
  *                 type: number
- *                 example: 900
+ *                 example: 180
  *               cgst:
  *                 type: number
- *                 example: 450
+ *                 example: 90
  *               sgst:
  *                 type: number
- *                 example: 450
+ *                 example: 90
  *               igst:
  *                 type: number
  *                 example: 0
  *     responses:
  *       201:
- *         description: Sales bill created successfully
+ *         description: Bill created successfully
  *         content:
  *           application/json:
  *             example:
  *               status: true
- *               message: "Sales bill created successfully"
- *               billId: "67e2ef21b97e84d55c672999"
- *               invoiceNumber: "INV-1001"
+ *               message: "Bill created successfully"
+ *               data:
+ *                 billId: 25
+ *                 invoiceNumber: "C-000015"
  *       400:
- *         description: Missing or invalid input data
+ *         description: Invalid input
  *       500:
  *         description: Internal server error
  */

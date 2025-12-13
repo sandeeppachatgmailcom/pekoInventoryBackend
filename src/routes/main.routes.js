@@ -6,6 +6,7 @@ const productRouter = require('./product.routes')
 const partyRoutes = require('./party.routes')
 const userRouter = require('./user.routes')
 const purchaseRouter = require('./purchase.routes')
+const salesRouter = require('./sales.routes')
 const mainRouter = express.Router()
 
 mainRouter
@@ -15,4 +16,5 @@ mainRouter
     .use('/supplier',partyRoutes)
     .use('/users',userRouter)
     .use('/purchase',purchaseRouter)
+    .use('/sales',salesRouter)
 module.exports = mainRouter
